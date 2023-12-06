@@ -1,7 +1,12 @@
+import { Map } from "./components/Map";
 import "./App.css";
 
 function App() {
-  return <div>Hello World</div>;
+  return (
+    <div>
+      <Map />
+    </div>
+  );
 }
 
 export default App;
