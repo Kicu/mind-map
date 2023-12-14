@@ -22,8 +22,6 @@ export function Node({ content, coords }: MapNode) {
     setCoords({ x, y });
   };
 
-  console.log("coords:", currentCoords);
-
   return (
     <div
       className="nodeWrapper"

@@ -1,10 +1,12 @@
-import { Map } from "./components/Map";
 import "./App.css";
+import { D3TestMap } from "./components/D3TestMap";
+import { D3RadialMap } from "./components/D3RadialMap";
 
 function App() {
   return (
     <div>
-      <Map />
+      <D3RadialMap />
+      <D3TestMap />
     </div>
   );
 }

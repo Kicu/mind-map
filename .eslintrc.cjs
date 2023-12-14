@@ -11,16 +11,6 @@ module.exports = {
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   parser: "@typescript-eslint/parser",
   plugins: ["react-refresh", "import"],
-  // settings: {
-  //   "import/resolver": {
-  //     typescript: {
-  //       alwaysTryTypes: true,
-  //     },
-  //     "node": {
-  //       "extensions": [".js", ".jsx", ".ts", ".tsx", ".css"]
-  //     }
-  //   },
-  // },
   rules: {
     "react-refresh/only-export-components": [
       "warn",
