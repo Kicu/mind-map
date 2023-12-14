@@ -21,8 +21,8 @@ export function D3RadialMap() {
   const { mapSVG, meta } = generateMap(testData, width, height, renderNode);
 
   useEffect(() => {
-    if (mapSVG && containerRef.current?.children.length === 0) {
-      containerRef.current?.appendChild(mapSVG);
+    if (containerRef.current?.children.length === 0) {
+      containerRef.current.appendChild(mapSVG);
     }
   }, [mapSVG]);
 

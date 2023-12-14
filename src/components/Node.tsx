@@ -9,8 +9,12 @@ export function Node({ content, coords }: MapNode) {
 
   const { x, y } = currentCoords;
 
-  const startDragging = () => setIsDragged(true);
-  const stopDragging = () => setIsDragged(false);
+  const startDragging = () => {
+    setIsDragged(true);
+  };
+  const stopDragging = () => {
+    setIsDragged(false);
+  };
 
   const onDrag = (e: React.MouseEvent) => {
     if (!isDragged) {
@@ -36,7 +40,9 @@ export function Node({ content, coords }: MapNode) {
         <input
           type="text"
           value={currentContent}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
         />
       </div>
     </div>

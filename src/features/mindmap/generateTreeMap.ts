@@ -93,6 +93,7 @@ export function generateTreeMap(
     .html((d) => renderNode(d));
 
   // top level svg node is guaranteed b/c we actually create it
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const mapNode = svg.node()!;
 
   return {

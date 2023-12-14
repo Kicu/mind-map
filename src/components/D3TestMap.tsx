@@ -21,10 +21,10 @@ export function D3TestMap() {
   const { mapSVG, meta } = generateTreeMap(testData, width, height, renderNode);
 
   useEffect(() => {
-    if (mapSVG && containerRef.current?.children.length === 0) {
-      containerRef.current?.appendChild(mapSVG);
+    if (containerRef.current?.children.length === 0) {
+      containerRef.current.appendChild(mapSVG);
     }
-  }, []);
+  }, [mapSVG]);
 
   return (
     <div className="map" style={{ width, height }}>
