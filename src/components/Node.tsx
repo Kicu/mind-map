@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { MapNode } from "./types";
-import "./Node.css";
 
 export function Node({ content, coords }: MapNode) {
   const [currentContent, setContent] = useState(content);

@@ -76,11 +76,11 @@ export function generateTreeMap(
     .selectAll()
     .data(treeRoot.descendants())
     .join("g")
-    .attr("transform", (d) => {
-      const x = d.x - nodeWidth / 2;
-      const y = d.y - nodeWidth / 2; // assuming node-circle is always square
+    .attr("transform", (node) => {
+      const x = node.x - nodeWidth / 2;
+      const y = node.y - nodeWidth / 2; // assuming node-circle is always square
       return `translate(${x},${y})`;
-    });
+    })
 
   node
     .append("foreignObject")

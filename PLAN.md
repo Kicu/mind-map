@@ -13,8 +13,10 @@
 	5. #4 try rendering react component via foreign object ✓
 6. polish 1
   - cleaner code
+  - extract components, reuse between trees
   - better textarea
-7. adding new bubble
-8. consider if dragging makes sense
+7. UI for controlling tree size and re-render
+8. adding new bubble
+9. consider if dragging makes sense
 
 - add backend and data somehow

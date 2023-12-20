@@ -5,7 +5,7 @@ import { isRootNode } from "./mapUtils";
 
 export const nodeColor = "cornflowerblue";
 
-export function generateMap(
+export function generateRadialMap(
   data: MapNode,
   width: number,
   height: number,
@@ -17,7 +17,7 @@ export function generateMap(
   /*** Compute the layout ***/
 
   // Add 1 to fit every layer of nodes
-  const nodeWidth = 150;
+  const nodeWidth = 180; // TODO make this editable
   const radius = width / 2;
 
   const tree = d3
@@ -28,10 +28,9 @@ export function generateMap(
   // This line unfortunately mutates root, which means "root" now is also an `HierarchyPointNode<>` type, but TS does not know that
   const treeRoot = tree(root);
 
-  // Count dimensions and center the tree.
+  // Count dimensions and center the graph
 
   let yMax = -Infinity;
-
   treeRoot.each((node: D3MapNode) => {
     if (node.y > yMax) {
       yMax = node.y;
@@ -49,6 +48,8 @@ export function generateMap(
     depth: hierarchyHeight,
   };
 
+  // Draw the Tree/graph
+
   const svg = d3
     .create("svg")
     .attr("width", width)
@@ -61,6 +62,11 @@ export function generateMap(
     ])
     .attr("style", "max-width: 100%; height: auto;");
 
+  // Generate links
+  const links = generateRadialMapLinks(treeRoot.links(), { color: nodeColor });
+  svg.append(() => links);
+
+  // Generate nodes
   function getNodeSize(node: D3MapNode) {
     if (isRootNode(node)) {
       return nodeWidth * 1.1;
@@ -71,11 +77,15 @@ export function generateMap(
     return nodeWidth - sizeCoefficient * nodeWidth;
   }
 
-  // Generate links
-  const links = generateRadialMapLinks(treeRoot.links(), { color: nodeColor });
-  svg.append(() => links);
-
-  // Generate nodes
+  /**
+   * This tree uses radial coordinates of style [angle, radius]
+   * node.x - the angle (in radians)
+   * node.y - how far from the center of circle node lies
+   * To actually draw nodes we need to translate them by "y" coord and also rotate them using the angle
+   * this will however also rotate all the content/text inside the node
+   * because of that we combine the rotation + reverse rotation with translating in proper order
+   * (Big thanks to Łukasz B. for showing me how combining rotations can work)
+   */
   const node = svg
     .append("g")
     .attr("stroke-linejoin", "round")
@@ -84,9 +94,13 @@ export function generateMap(
     .join("g")
     .attr("transform", (node) => {
       const nodeSize = getNodeSize(node);
+      const rotationAngle = (node.x * 180) / Math.PI - 90; // rad to deg
+
       return (
-        `rotate(${(node.x * 180) / Math.PI - 90})` +
-        `translate(${node.y - nodeSize / 2},${-nodeSize / 2})`
+        `rotate(${rotationAngle})` +
+        `translate(${node.y},0)` +
+        `rotate(${-rotationAngle})` +
+        `translate(${-nodeSize / 2},${-nodeSize / 2})` // center the node
       );
     });
 
@@ -94,17 +108,6 @@ export function generateMap(
     .append("foreignObject")
     .attr("width", getNodeSize)
     .attr("height", getNodeSize)
-    .append("xhtml:div")
-    .style("width", (node) => {
-      return `${getNodeSize(node)}px`;
-    })
-    .style("height", (node) => {
-      return `${getNodeSize(node)}px`;
-    })
-    .style("transform", (node) => {
-      const rotation = (node.x * 180) / Math.PI - 90;
-      return `rotate(${-rotation}deg)`;
-    })
     .html((d) => renderNode(d));
 
   // top level svg node is guaranteed b/c we actually create it

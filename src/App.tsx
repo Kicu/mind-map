@@ -1,12 +1,12 @@
 import "./App.css";
-import { D3TestMap } from "./components/D3TestMap";
-import { D3RadialMap } from "./components/D3RadialMap";
+// import { MindMapTree } from "./components/MindMapTree";
+import { MindMapRadial } from "./components/MindMapRadial";
 
 function App() {
   return (
     <div>
-      <D3RadialMap />
-      <D3TestMap />
+      <MindMapRadial />
+      {/* <MindMapTree /> */}
     </div>
   );
 }
