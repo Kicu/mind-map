@@ -15,6 +15,7 @@ export function AttachForeignSVG({ element, onElementAttached }: Props) {
     }
 
     onElementAttached();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div ref={containerRef}></div>;

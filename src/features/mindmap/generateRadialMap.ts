@@ -16,7 +16,6 @@ export function generateRadialMap(
 
   /*** Compute the layout ***/
 
-  // Add 1 to fit every layer of nodes
   const nodeWidth = 180; // TODO make this editable
   const radius = width / 2;
 

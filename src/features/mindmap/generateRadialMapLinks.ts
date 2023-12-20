@@ -17,7 +17,7 @@ export function generateRadialMapLinks(
     .append("g")
     .attr("fill", "none")
     .attr("stroke", color)
-    .attr("stroke-width", 7);
+    .attr("stroke-width", 5);
 
   // Draw the links as svg path using d3 line generator
   const link = linksGrouping.selectAll("path").data(linksData).join("path");

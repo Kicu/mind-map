@@ -29,7 +29,7 @@ export function generateTreeMapLinks(
     .append("g")
     .attr("fill", "none")
     .attr("stroke", color)
-    .attr("stroke-width", 6);
+    .attr("stroke-width", 5);
 
   // Draw the links as svg <line>
   const link = linksGrouping.selectAll().data(linksData).join("line");

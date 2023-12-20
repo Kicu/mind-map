@@ -25,7 +25,6 @@ export function MindMapRadial() {
     return renderNodeElement(node);
   };
 
-  // Todo extract reft to separate component
   useEffect(() => {
     const { mapSVG, meta } = generateRadialMap(
       testData,
