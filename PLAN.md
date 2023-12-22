@@ -14,10 +14,11 @@
 6. polish 1
   - cleaner code
   - extract components, reuse between trees ✓
-  - better textarea
-7. UI for controlling tree size and re-render
-8. improve styling of content inside node
-9. adding new node 
+7. UI for controlling tree size and re-render ✓
+8. decide upon data structure
+9. svg overflow + scrolling for good UX
+10. improve styling of content inside node
+11. adding new node 
 
 - add backend and data somehow
 - consider if dragging nodes makes sense

@@ -5,7 +5,7 @@ interface Props {
 }
 
 export function MindMapInfo({ meta }: Props) {
-  const treeSize = `Map dimensions: ${meta.treeWidth} x ${meta.treeHeight}`;
+  const mapSize = `Map dimensions: ${meta.treeWidth} x ${meta.treeHeight}`;
 
-  return <div>{`${treeSize} (depth: ${meta.depth})`}</div>;
+  return <div>{`${mapSize} (depth: ${meta.depth})`}</div>;
 }

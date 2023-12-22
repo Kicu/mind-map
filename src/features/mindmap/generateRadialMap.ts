@@ -2,21 +2,20 @@ import * as d3 from "d3";
 import { MapNode, D3MapNode, MindMap } from "./types";
 import { generateRadialMapLinks } from "./generateRadialMapLinks";
 import { isRootNode } from "./mapUtils";
-
-export const nodeColor = "cornflowerblue";
+import { MapOptions } from "../../components/types";
 
 export function generateRadialMap(
   data: MapNode,
-  width: number,
-  height: number,
+  options: MapOptions,
   renderNode: (node: D3MapNode) => string
 ): MindMap {
+  const { width, height, nodeWidth, nodeColor } = options;
+
   const root = d3.hierarchy(data);
   // TODO think about sorting nodes: root.sort(...);
 
   /*** Compute the layout ***/
 
-  const nodeWidth = 180; // TODO make this editable
   const radius = width / 2;
 
   const tree = d3
@@ -54,8 +53,8 @@ export function generateRadialMap(
     .attr("width", width)
     .attr("height", height)
     .attr("viewBox", [
-      -radius - nodeWidth / 2,
-      -radius - nodeWidth / 2,
+      -radius ,
+      -radius ,
       2 * treeHeight + nodeWidth,
       2 * treeHeight + nodeWidth,
     ])

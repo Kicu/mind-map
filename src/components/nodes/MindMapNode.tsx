@@ -1,4 +1,5 @@
 import { MapNode } from "../../features/mindmap/types";
+import "./MindMapNode.css";
 
 interface Props {
   nodeData: MapNode;

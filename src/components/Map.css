@@ -1,21 +1,14 @@
 .map {
-  background-color: #efefef;
-  border: 1px solid red;
-}
-
-.node__nodeWrapper {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: cornflowerblue;
-  color: #efefef;
-  border: 1px solid cornflowerblue;
-}
-
-.node__content {
-  padding: 0 1rem;
+  margin: 1rem;
+  background-image: linear-gradient(
+    135deg,
+    #fdfdfd 25%,
+    #efefef 25%,
+    #efefef 50%,
+    #fdfdfd 50%,
+    #fdfdfd 75%,
+    #efefef 75%,
+    #efefef 100%
+  );
+  background-size: 33.94px 33.94px;
 }

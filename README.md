@@ -39,6 +39,9 @@ The the actual contents and lines are rendered in SVG. For nodes just a plain `d
 
 `TODO improve this section``
 
+### Styling
+TODO
+
 ## Useful articles and sources
  - [Base example of d3 tidy tree from Observable](https://observablehq.com/@d3/tree-component)
  - [A Brief Guide to TypeScript and D3js Hierarchy and Trees](https://javascript.plainenglish.io/a-brief-guide-to-typescript-and-d3js-hierarchy-and-trees-f9bb45871d88) - this was extremely helpful in handling generics from d3 which were quite tricky
