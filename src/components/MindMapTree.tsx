@@ -1,42 +1,41 @@
 import { useEffect, useReducer, useState } from "react";
-import { generateTreeMap } from "../features/mindmap/generateTreeMap";
-import { D3MapNode, MapMeta } from "../features/mindmap/types";
-import { testData } from "../features/mindmap/nodeData";
+import { generateTreeMap } from "../features/mindmap/tree/generateTreeMap";
+import { MapMeta, MapNode } from "../features/mindmap/types";
 import { MindMapInfo } from "../features/mindmap/components/MindMapInfo";
 import { AttachForeignSVG } from "./AttachForeignSVG";
 import { renderNode as renderNodeElement } from "./nodes/renderNode";
 import { nodesReducer, registerNode } from "../state/mapNodesState";
-import "./Map.css";
 import { MindMapNodeList } from "./nodes/MindMapNodeList";
+import { MapOptions } from "./types";
+import "./Map.css";
 
-const width = 1000;
-const height = 600;
+interface Props {
+  nodes: MapNode;
+  mapOptions: MapOptions;
+}
 
-export function MindMapTree() {
+export function MindMapTree({ nodes, mapOptions }: Props) {
+  const { width, height } = mapOptions;
+
   const [mapMeta, setMapMeta] = useState<MapMeta>();
   const [mapSVGElement, setMapElement] = useState<SVGSVGElement>();
   const [isMapSVGAttached, setIsMapSVGAttached] = useState(false);
 
   const [state, dispatch] = useReducer(nodesReducer, {});
 
-  const renderNode = (node: D3MapNode) => {
-    dispatch(registerNode(node.data));
+  const renderNode = (node: MapNode) => {
+    dispatch(registerNode(node));
 
     return renderNodeElement(node);
   };
 
   // for now since all the tree args are local we just run effect once
   useEffect(() => {
-    const { mapSVG, meta } = generateTreeMap(
-      testData,
-      width,
-      height,
-      renderNode
-    );
+    const { mapSVG, meta } = generateTreeMap(nodes, mapOptions, renderNode);
 
     setMapMeta(meta);
     setMapElement(mapSVG);
-  }, []);
+  }, [nodes, mapOptions]);
 
   return (
     <div className="map" style={{ width, height }}>

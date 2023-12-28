@@ -1,23 +1,22 @@
 import * as d3 from "d3";
-import { MapNode, D3MapNode, MindMap } from "./types";
+import { MapNode, D3MapNode, MindMap } from "../types";
 import { generateTreeMapLinks } from "./generateTreeMapLinks";
+import { MapOptions } from "../../../components/types";
 
 export const nodeColor = "cornflowerblue";
 
 export function generateTreeMap(
   data: MapNode,
-  width: number,
-  height: number,
-  renderNode: (node: D3MapNode) => string
+  options: MapOptions,
+  renderNode: (node: MapNode) => string
 ): MindMap {
+  const { width, height, nodeWidth, nodeColor } = options;
+  const nodeHeight = nodeWidth;
+
   const root = d3.hierarchy(data);
   // TODO think about sorting nodes: root.sort(...);
 
   /*** Compute the layout ***/
-
-  // Todo think about node sizes
-  const nodeHeight = 200;
-  const nodeWidth = 150;
 
   const tree = d3
     .tree<MapNode>()
@@ -27,7 +26,7 @@ export function generateTreeMap(
   // This line unfortunately mutates root, which means "root" now is also an `HierarchyPointNode<>` type, but TS does not know that
   const treeRoot = tree(root);
 
-  // Count dimensions and center the tree.
+  // Calculate SVG dimensions and center the tree.
   let x0 = Infinity;
   let x1 = -Infinity;
   let y1 = -Infinity;
@@ -57,9 +56,9 @@ export function generateTreeMap(
     .attr("width", width)
     .attr("height", height)
     .attr("viewBox", [
-      x0 - nodeWidth / 2,
-      -nodeHeight / 2,
-      treeWidth + nodeWidth,
+      x0 - nodeWidth / 2 - 10,
+      - nodeWidth / 2,
+      treeWidth + nodeWidth + 20, // +20 accounts for nodes expanding on hover to avoid clipping
       treeHeight + nodeHeight,
     ])
     .attr("style", "max-width: 100%; height: auto;");
@@ -72,7 +71,7 @@ export function generateTreeMap(
   const node = svg
     .append("g")
     .attr("stroke-linejoin", "round")
-    .attr("stroke-width", 3)
+    .attr("stroke-width", 2)
     .selectAll()
     .data(treeRoot.descendants())
     .join("g")
@@ -80,7 +79,7 @@ export function generateTreeMap(
       const x = node.x - nodeWidth / 2;
       const y = node.y - nodeWidth / 2; // assuming node-circle is always square
       return `translate(${x},${y})`;
-    })
+    });
 
   node
     .append("foreignObject")
@@ -90,7 +89,8 @@ export function generateTreeMap(
     .attr("height", () => {
       return nodeWidth;
     })
-    .html((d) => renderNode(d));
+    .style("overflow", "visible")
+    .html((node) => renderNode(node.data));
 
   // top level svg node is guaranteed b/c we actually create it
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

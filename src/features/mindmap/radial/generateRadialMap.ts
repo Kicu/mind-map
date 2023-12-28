@@ -1,13 +1,13 @@
 import * as d3 from "d3";
-import { MapNode, D3MapNode, MindMap } from "./types";
+import { MapNode, D3MapNode, MindMap } from "../types";
 import { generateRadialMapLinks } from "./generateRadialMapLinks";
-import { isRootNode } from "./mapUtils";
-import { MapOptions } from "../../components/types";
+import { isRootNode } from "../mapUtils";
+import { MapOptions } from "../../../components/types";
 
 export function generateRadialMap(
   data: MapNode,
   options: MapOptions,
-  renderNode: (node: D3MapNode) => string
+  renderNode: (node: MapNode) => string
 ): MindMap {
   const { width, height, nodeWidth, nodeColor } = options;
 
@@ -21,7 +21,7 @@ export function generateRadialMap(
   const tree = d3
     .tree<MapNode>()
     .size([2 * Math.PI, radius])
-    .separation(() => 2);
+    .separation(() => 1.5);
 
   // This line unfortunately mutates root, which means "root" now is also an `HierarchyPointNode<>` type, but TS does not know that
   const treeRoot = tree(root);
@@ -106,7 +106,8 @@ export function generateRadialMap(
     .append("foreignObject")
     .attr("width", getNodeSize)
     .attr("height", getNodeSize)
-    .html((d) => renderNode(d));
+    .style("overflow", "visible")
+    .html((node) => renderNode(node.data));
 
   // top level svg node is guaranteed b/c we actually create it
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

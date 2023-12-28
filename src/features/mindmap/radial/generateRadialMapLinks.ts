@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { D3MapLink, D3MapNode } from "./types";
+import { D3MapLink, D3MapNode } from "../types";
 
 interface Options {
   color: string;

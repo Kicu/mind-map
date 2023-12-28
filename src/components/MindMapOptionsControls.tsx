@@ -1,4 +1,4 @@
-import { MapOptions } from "./types";
+import { MapOptions, MapType } from "./types";
 import "./MindMapOptionsControls.css";
 import { useState } from "react";
 
@@ -14,6 +14,8 @@ function getCleanVal(val: string) {
 
 interface Props {
   options: MapOptions;
+  mapType: MapType;
+  setMapType: (type: MapType) => void;
   setWidth: (value: number) => void;
   setHeight: (value: number) => void;
   setNodeWidth: (value: number) => void;
@@ -23,13 +25,14 @@ interface Props {
 
 export function MindMapOptionsControls({
   options,
+  mapType,
   setWidth,
   setHeight,
-  setNodeHeight,
   setNodeWidth,
+  setMapType,
   onUpdateClick,
 }: Props) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
@@ -86,7 +89,7 @@ export function MindMapOptionsControls({
             />
           </div>
         </div>
-        <div className="field">
+        {/* <div className="field">
           <label className="label is-small">Node height</label>
           <div className="control">
             <input
@@ -98,6 +101,33 @@ export function MindMapOptionsControls({
                 setNodeHeight(value);
               }}
             />
+          </div>
+        </div> */}
+        <div className="field">
+          <label className="label is-small">Map Type</label>
+          <div className="control">
+            <label className="radio">
+              <input
+                type="radio"
+                name="treeType"
+                checked={mapType === "TREE"}
+                onChange={() => {
+                  setMapType("TREE");
+                }}
+              />
+              Tree
+            </label>
+            <label className="radio">
+              <input
+                type="radio"
+                name="treeType"
+                checked={mapType === "RADIAL"}
+                onChange={() => {
+                  setMapType("RADIAL");
+                }}
+              />
+              Radial
+            </label>
           </div>
         </div>
         <div className="control">

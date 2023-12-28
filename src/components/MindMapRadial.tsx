@@ -1,13 +1,13 @@
 import { useEffect, useReducer, useState } from "react";
-import { generateRadialMap } from "../features/mindmap/generateRadialMap";
+import { generateRadialMap } from "../features/mindmap/radial/generateRadialMap";
 import { MindMapInfo } from "../features/mindmap/components/MindMapInfo";
 import { renderNode as renderNodeElement } from "./nodes/renderNode";
-import { D3MapNode, MapMeta, MapNode } from "../features/mindmap/types";
+import { MapMeta, MapNode } from "../features/mindmap/types";
 import { MindMapNodeList } from "./nodes/MindMapNodeList";
 import { AttachForeignSVG } from "./AttachForeignSVG";
 import { nodesReducer, registerNode } from "../state/mapNodesState";
-import "./Map.css";
 import { MapOptions } from "./types";
+import "./Map.css";
 
 interface Props {
   nodes: MapNode;
@@ -23,8 +23,8 @@ export function MindMapRadial({ nodes, mapOptions }: Props) {
 
   const [state, dispatch] = useReducer(nodesReducer, {});
 
-  const renderNode = (node: D3MapNode) => {
-    dispatch(registerNode(node.data));
+  const renderNode = (node: MapNode) => {
+    dispatch(registerNode(node));
 
     return renderNodeElement(node);
   };
