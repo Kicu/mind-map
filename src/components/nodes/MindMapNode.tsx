@@ -5,9 +5,10 @@ import "./MindMapNode.css";
 
 interface Props {
   nodeData: MapNode;
+  nodeColor: string;
 }
 
-export function MindMapNode({ nodeData }: Props) {
+export function MindMapNode({ nodeData, nodeColor }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpenState = () => {
@@ -21,7 +22,11 @@ export function MindMapNode({ nodeData }: Props) {
   });
 
   return (
-    <div className={wrapperClass} onClick={toggleOpenState}>
+    <div
+      className={wrapperClass}
+      style={{ backgroundColor: nodeColor }}
+      onClick={toggleOpenState}
+    >
       <div className="node__nodeName">
         <p>{name}</p>
       </div>

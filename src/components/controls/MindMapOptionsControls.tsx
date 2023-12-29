@@ -1,6 +1,7 @@
-import { MapOptions, MapType } from "./types";
-import "./MindMapOptionsControls.css";
+import { MapOptions, MapType } from "../types";
 import { useState } from "react";
+import "./MindMapOptionsControls.css";
+import { MindMapOptionsColorSelect } from "./MindMapOptionsColorSelect";
 
 function getCleanVal(val: string) {
   const value = parseInt(val, 10);
@@ -15,21 +16,25 @@ function getCleanVal(val: string) {
 interface Props {
   options: MapOptions;
   mapType: MapType;
+  availableColors: Record<string, string>;
   setMapType: (type: MapType) => void;
   setWidth: (value: number) => void;
   setHeight: (value: number) => void;
   setNodeWidth: (value: number) => void;
   setNodeHeight: (value: number) => void;
+  setColor: (value: string) => void;
   onUpdateClick: () => void;
 }
 
 export function MindMapOptionsControls({
   options,
   mapType,
+  availableColors,
   setWidth,
   setHeight,
   setNodeWidth,
   setMapType,
+  setColor,
   onUpdateClick,
 }: Props) {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -103,6 +108,11 @@ export function MindMapOptionsControls({
             />
           </div>
         </div> */}
+        <MindMapOptionsColorSelect
+          availableColors={availableColors}
+          options={options}
+          setColor={setColor}
+        />
         <div className="field">
           <label className="label is-small">Map Type</label>
           <div className="control">

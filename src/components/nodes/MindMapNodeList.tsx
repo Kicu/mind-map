@@ -4,9 +4,10 @@ import { createPortal } from "react-dom";
 
 interface Props {
   mapNodes: MapNode[];
+  nodeColor: string;
 }
 
-export function MindMapNodeList({ mapNodes }: Props) {
+export function MindMapNodeList({ mapNodes, nodeColor }: Props) {
   return (
     <div className="">
       {mapNodes.map((node) => {
@@ -17,7 +18,10 @@ export function MindMapNodeList({ mapNodes }: Props) {
           return null;
         }
 
-        return createPortal(<MindMapNode nodeData={node} />, nodeContainer);
+        return createPortal(
+          <MindMapNode nodeColor={nodeColor} nodeData={node} />,
+          nodeContainer
+        );
       })}
     </div>
   );

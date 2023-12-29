@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function MindMapTree({ nodes, mapOptions }: Props) {
-  const { width, height } = mapOptions;
+  const { width, height, nodeColor } = mapOptions;
 
   const [mapMeta, setMapMeta] = useState<MapMeta>();
   const [mapSVGElement, setMapElement] = useState<SVGSVGElement>();
@@ -48,7 +48,7 @@ export function MindMapTree({ nodes, mapOptions }: Props) {
           }}
         />
       )}
-      {isMapSVGAttached && <MindMapNodeList mapNodes={Object.values(state)} />}
+      {isMapSVGAttached && <MindMapNodeList mapNodes={Object.values(state)} nodeColor={nodeColor} />}
     </div>
   );
 }

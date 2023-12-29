@@ -3,7 +3,9 @@ import { MapNode, D3MapNode, MindMap } from "../types";
 import { generateTreeMapLinks } from "./generateTreeMapLinks";
 import { MapOptions } from "../../../components/types";
 
-export const nodeColor = "cornflowerblue";
+function getNodeSeparation(a: D3MapNode, b: D3MapNode) {
+  return a.parent == b.parent ? 1.5 : 2;
+}
 
 export function generateTreeMap(
   data: MapNode,
@@ -11,7 +13,8 @@ export function generateTreeMap(
   renderNode: (node: MapNode) => string
 ): MindMap {
   const { width, height, nodeWidth, nodeColor } = options;
-  const nodeHeight = nodeWidth;
+  // This means that when the tree nodes are positioned there will be more vspace between nodes
+  const nodeHeight = nodeWidth * 1.5;
 
   const root = d3.hierarchy(data);
   // TODO think about sorting nodes: root.sort(...);
@@ -21,9 +24,9 @@ export function generateTreeMap(
   const tree = d3
     .tree<MapNode>()
     .nodeSize([nodeWidth, nodeHeight])
-    .separation(() => 1.5);
+    .separation(getNodeSeparation);
 
-  // This line unfortunately mutates root, which means "root" now is also an `HierarchyPointNode<>` type, but TS does not know that
+  // This call unfortunately mutates root, which means "root" now is also a `HierarchyPointNode<_>`, but TS doesn't know that
   const treeRoot = tree(root);
 
   // Calculate SVG dimensions and center the tree.

@@ -4,6 +4,14 @@ import { generateRadialMapLinks } from "./generateRadialMapLinks";
 import { isRootNode } from "../mapUtils";
 import { MapOptions } from "../../../components/types";
 
+/**
+ * because of the radial nature of this tree, the separation needs to be a function that reduces the gap based on radius
+ * taken from docs: https://d3js.org/d3-hierarchy/tree#tree_separation
+ */
+function getNodeSeparation(a: D3MapNode, b: D3MapNode) {
+  return (a.parent == b.parent ? 1 : 2) / a.depth;
+}
+
 export function generateRadialMap(
   data: MapNode,
   options: MapOptions,
@@ -21,7 +29,7 @@ export function generateRadialMap(
   const tree = d3
     .tree<MapNode>()
     .size([2 * Math.PI, radius])
-    .separation(() => 1.5);
+    .separation(getNodeSeparation);
 
   // This line unfortunately mutates root, which means "root" now is also an `HierarchyPointNode<>` type, but TS does not know that
   const treeRoot = tree(root);
@@ -53,8 +61,8 @@ export function generateRadialMap(
     .attr("width", width)
     .attr("height", height)
     .attr("viewBox", [
-      -radius ,
-      -radius ,
+      -radius,
+      -radius,
       2 * treeHeight + nodeWidth,
       2 * treeHeight + nodeWidth,
     ])

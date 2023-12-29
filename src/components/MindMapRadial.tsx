@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function MindMapRadial({ nodes, mapOptions }: Props) {
-  const { width, height } = mapOptions;
+  const { width, height, nodeColor } = mapOptions;
 
   const [mapSVGElement, setMapElement] = useState<SVGSVGElement>();
   const [mapMeta, setMapMeta] = useState<MapMeta>();
@@ -47,7 +47,12 @@ export function MindMapRadial({ nodes, mapOptions }: Props) {
           }}
         />
       )}
-      {isMapSVGAttached && <MindMapNodeList mapNodes={Object.values(state)} />}
+      {isMapSVGAttached && (
+        <MindMapNodeList
+          mapNodes={Object.values(state)}
+          nodeColor={nodeColor}
+        />
+      )}
     </div>
   );
 }

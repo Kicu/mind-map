@@ -43,26 +43,26 @@ export const testData: MapNode = {
     {
       id: toNodeId("3"),
       name: "other",
-      // children: [
-      //   {
-      //     id: toNodeId("301"),
-      //     name: "PBTA",
-      //     content: "Powered by the Apocalypse",
-      //     children: [
-      //       { id: toNodeId("302"), name: "FiTD", content: "" },
-      //       { id: toNodeId("303"), name: "MoTW", content: "" },
-      //     ],
-      //   },
-      //   {
-      //     id: toNodeId("5"),
-      //     name: "CoC",
-      //     content: "Call of Cthulhu",
-      //     children: [{ id: toNodeId("55"), name: "Pulp Cthulhu" }],
-      //   },
-      //   { id: toNodeId("6"), name: "Fate" },
-      //   { id: toNodeId("7"), name: "Delta Green" },
-      //   { id: toNodeId("8"), name: "Heart" },
-      // ],
+      children: [
+        {
+          id: toNodeId("301"),
+          name: "PBTA",
+          content: "Powered by the Apocalypse",
+          children: [
+            { id: toNodeId("302"), name: "FiTD", content: "" },
+            { id: toNodeId("303"), name: "MoTW", content: "" },
+          ],
+        },
+        {
+          id: toNodeId("5"),
+          name: "CoC",
+          content: "Call of Cthulhu",
+          children: [{ id: toNodeId("55"), name: "Pulp Cthulhu" }],
+        },
+        { id: toNodeId("6"), name: "Fate" },
+        { id: toNodeId("7"), name: "Delta Green" },
+        { id: toNodeId("8"), name: "Heart" },
+      ],
     },
   ],
 };
