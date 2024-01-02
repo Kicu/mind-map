@@ -1,6 +1,6 @@
+import { createPortal } from "react-dom";
 import { MapNode } from "../../features/mindmap/types";
 import { MindMapNode } from "./MindMapNode";
-import { createPortal } from "react-dom";
 
 interface Props {
   mapNodes: MapNode[];
@@ -14,7 +14,7 @@ export function MindMapNodeList({ mapNodes, nodeColor }: Props) {
         const nodeContainer = document.getElementById(`node-${node.id}`);
 
         if (!nodeContainer) {
-          console.warn(`found no element to render node with id: ${node.id}`);
+          console.warn(`no element found to render node with id: ${node.id}`);
           return null;
         }
 
