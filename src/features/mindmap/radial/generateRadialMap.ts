@@ -22,9 +22,13 @@ export function generateRadialMap(
   const root = d3.hierarchy(data);
   // TODO think about sorting nodes: root.sort(...);
 
+  // Add 1 to account for the root node
+  const hierarchyHeight = root.height + 1;
+
   /*** Compute the layout ***/
 
-  const radius = width / 2;
+  // const radius = width / 2;
+  const radius = hierarchyHeight * nodeWidth;
 
   const tree = d3
     .tree<MapNode>()
@@ -43,10 +47,8 @@ export function generateRadialMap(
     }
   });
 
-  const treeHeight = yMax; // y0 is always 0
+  const treeHeight = yMax; // y0 is always 0 because its the center of circle
 
-  // Add 1 to account for the root node
-  const hierarchyHeight = root.height + 1;
   // This tree is always drawn in a radial way, so the definition of "width/height" is different
   const treeMeta = {
     treeWidth: 2 * treeHeight,
@@ -61,10 +63,10 @@ export function generateRadialMap(
     .attr("width", width)
     .attr("height", height)
     .attr("viewBox", [
-      -radius,
-      -radius,
-      2 * treeHeight + nodeWidth,
-      2 * treeHeight + nodeWidth,
+      -radius - nodeWidth / 2,
+      -radius + 100,
+      2 * radius,
+      2 * radius,
     ])
     .attr("style", "max-width: 100%; height: auto;");
 
@@ -78,7 +80,7 @@ export function generateRadialMap(
       return nodeWidth * 1.1;
     }
 
-    const sizeCoefficient = node.depth * 0.1;
+    const sizeCoefficient = node.depth * 0.05;
 
     return nodeWidth - sizeCoefficient * nodeWidth;
   }
@@ -115,6 +117,7 @@ export function generateRadialMap(
     .attr("width", getNodeSize)
     .attr("height", getNodeSize)
     .style("overflow", "visible")
+    .attr("data-size", (d) => `x:${d.x}:y:${d.y}`)
     .html((node) => renderNode(node.data));
 
   // top level svg node is guaranteed b/c we actually create it

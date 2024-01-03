@@ -7,7 +7,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* background-color: cornflowerblue; */
   color: #efefef;
   cursor: pointer;
 }
@@ -20,14 +19,19 @@
   z-index: 1000;
 }
 
+.node__nodeWrapper--isOpen {
+  border: 2px solid black;
+}
+
 .node__nodeName {
   padding: 0 1rem;
   text-align: center;
+  font-size: 1.2rem;
 }
 
 .node__nodeWrapper--isOpen .node__nodeName,
 .node__nodeWrapper:hover .node__nodeName {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .node__nodeContent {

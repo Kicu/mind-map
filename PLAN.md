@@ -16,10 +16,12 @@
   - extract components, reuse between trees ✓
 7. UI for controlling tree size and re-render ✓
 8. decide upon data structure
-9. svg overflow + scrolling for good UX
-10. fix z-index/overflow on selected node
-11. improve styling of content inside node 
-12. adding new node 
+9. add scrolling
+10. some heuristic for guessing how to center radial tree to look good for user
+11. fix z-index/overflow on selected node
+12. improve styling of content inside node
+13. adding new node
 
-- add backend and data somehow
-- consider if dragging nodes makes sense
+### Considerations
+ - add backend and data somehow
+ - consider if dragging nodes makes sense

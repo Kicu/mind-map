@@ -4,7 +4,7 @@
 
 For a long time I've been drawn to knowledge structurization and mapping. This mostly comes from me often getting interested in a multitude of random topics, then doing research on them, but ultimately forgetting a lot of it. After that I would have a hard time coming back to the sources that I found on the internet knowledge that I gathered.
 
-Normal note making and saving links didn't cut it (I tried notion), so I wanted a more visual way to keep such notes.
+Normal note making and saving links didn't cut it (I tried Notion among others), so I wanted a more visual way to keep such notes.
 
 This project is my attempt at playing with mindmaps (check out the definition on [wikipedia](https://en.wikipedia.org/wiki/Mind_map)).  
 It's purpose is to be able to draw both easy to read and pretty looking hierarchical structures of data.
@@ -57,8 +57,27 @@ The actual visual content of the nodes is later rendered using `React.createPort
 
 TODO
 
+## Features & next steps 🔧
+### 1. add scrolling, panning and zooming
+  - right now mindmap is an svg with static size, if it gets too big nodes cannot be viewed
+
+### 2. improve displaying nodes and their content
+  - right now nodes are very rudimentary and long words will not fit in them, this needs to be improved
+  - allow for other kinds of content: hyperlinks, images etc
+
+### 3. proper data manipulation
+  - currently user cannot in any way edit data - data is a just a static file with a js object inside
+  - allow adding new nodes and removing existing nodes
+  - actual api with some storage - either mock db (file based) or some actual db 
+
+### list of known bugs
+  - on hover/on click z-indexes don't work correctly, nodes get covered with children nodes
+  - no easy way to fit and center radial map on the viewbox, makes it look bad in initial render (lots of whitespace)
+  - nodeWidth isn't really taken into account for radial map - refactor this
+
 ## Useful articles and sources
 
 - [Base example of d3 tidy tree from Observable](https://observablehq.com/@d3/tree-component)
+- [Base example of d3 radial tree from Observable](https://observablehq.com/@d3/radial-tree-component)
 - [A Brief Guide to TypeScript and D3js Hierarchy and Trees](https://javascript.plainenglish.io/a-brief-guide-to-typescript-and-d3js-hierarchy-and-trees-f9bb45871d88) - this was extremely helpful in handling generics from d3 which were quite tricky
 -

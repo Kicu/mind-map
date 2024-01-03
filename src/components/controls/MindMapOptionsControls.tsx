@@ -19,7 +19,6 @@ interface Props {
   availableColors: Record<string, string>;
   setMapType: (type: MapType) => void;
   setWidth: (value: number) => void;
-  setHeight: (value: number) => void;
   setNodeWidth: (value: number) => void;
   setNodeHeight: (value: number) => void;
   setColor: (value: string) => void;
@@ -31,7 +30,6 @@ export function MindMapOptionsControls({
   mapType,
   availableColors,
   setWidth,
-  setHeight,
   setNodeWidth,
   setMapType,
   setColor,
@@ -43,7 +41,7 @@ export function MindMapOptionsControls({
     setIsExpanded(!isExpanded);
   };
 
-  const expandLabel = isExpanded ? "options ⬆️" : "options ⬇️";
+  const expandLabel = isExpanded ? "minimize ⬆️" : "options ⬇️";
   const wrapperClass =
     "mindMapOptions__formWrapper" + (isExpanded ? "--isExpanded" : "");
 
@@ -65,7 +63,7 @@ export function MindMapOptionsControls({
             />
           </div>
         </div>
-        <div className="field">
+        {/* <div className="field">
           <label className="label is-small">Height</label>
           <div className="control">
             <input
@@ -79,7 +77,7 @@ export function MindMapOptionsControls({
               }}
             />
           </div>
-        </div>
+        </div> */}
         <div className="field">
           <label className="label is-small">Node width</label>
           <div className="control">

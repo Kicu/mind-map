@@ -13,7 +13,7 @@ export function generateTreeMap(
   renderNode: (node: MapNode) => string
 ): MindMap {
   const { width, height, nodeWidth, nodeColor } = options;
-  // This means that when the tree nodes are positioned there will be more vspace between nodes
+  // This means that when the tree nodes are positioned there will be more vertical space between nodes
   const nodeHeight = nodeWidth * 1.5;
 
   const root = d3.hierarchy(data);
@@ -60,8 +60,8 @@ export function generateTreeMap(
     .attr("height", height)
     .attr("viewBox", [
       x0 - nodeWidth / 2 - 10,
-      - nodeWidth / 2,
-      treeWidth + nodeWidth + 20, // +20 accounts for nodes expanding on hover to avoid clipping
+      -nodeWidth / 2,
+      treeWidth + nodeWidth + 20, // 20 to avoid clipping when expanding on node hover
       treeHeight + nodeHeight,
     ])
     .attr("style", "max-width: 100%; height: auto;");
@@ -86,12 +86,9 @@ export function generateTreeMap(
 
   node
     .append("foreignObject")
-    .attr("width", () => {
-      return nodeWidth;
-    })
-    .attr("height", () => {
-      return nodeWidth;
-    })
+    .attr("width", () => nodeWidth)
+    .attr("height", () => nodeWidth)
+    .attr("data-size", (d) => `x:${d.x}:y:${d.y}`)
     .style("overflow", "visible")
     .html((node) => renderNode(node.data));
 

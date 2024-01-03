@@ -1,12 +1,12 @@
 import { useCallback, useState } from "react";
-import { testData } from "../features/mindmap/nodeData";
+// import data from "../state/static/data-ttrpgs";
+import data from "../state/static/data-life";
 import { MindMapRadial } from "./MindMapRadial";
 import { MapOptions, MapType } from "./types";
 import { MindMapOptionsControls } from "./controls/MindMapOptionsControls";
 import { MindMapTree } from "./MindMapTree";
 
-const baseWidth = 1100;
-const baseHeight = 900;
+const baseWidth = 1000;
 const baseNodeWidth = 150;
 const baseNodeHeight = 150;
 
@@ -20,12 +20,12 @@ const availableColors = {
 type MapColor = keyof typeof availableColors;
 
 export function MindMapView() {
+  // having a separate height doesn't currently improve the app as its easier to draw maps in a square container
   const [width, setWidth] = useState(baseWidth);
-  const [height, setHeight] = useState(baseHeight);
   const [nodeWidth, setNodeWidth] = useState(baseNodeWidth);
   const [nodeHeight, setNodeHeight] = useState(baseNodeHeight);
   const [mapColor, setMapColor] = useState<MapColor>("blue");
-  const [mapType, setMapType] = useState<MapType>("TREE");
+  const [mapType, setMapType] = useState<MapType>("RADIAL");
 
   // sneaky hacky way to just drop the whole react-tree with <Map> and render a fresh one
   const [key, setKey] = useState(1);
@@ -39,7 +39,7 @@ export function MindMapView() {
 
   const mapOptions: MapOptions = {
     width,
-    height,
+    height: width,
     nodeWidth,
     nodeHeight,
     nodeColor: availableColors[mapColor],
@@ -53,16 +53,15 @@ export function MindMapView() {
         availableColors={availableColors}
         setMapType={setMapType}
         setWidth={setWidth}
-        setHeight={setHeight}
         setNodeWidth={setNodeWidth}
         setNodeHeight={setNodeHeight}
         setColor={setColor}
         onUpdateClick={forceFreshRender}
       />
       {mapType === "RADIAL" ? (
-        <MindMapRadial key={key} nodes={testData} mapOptions={mapOptions} />
+        <MindMapRadial key={key} nodes={data} mapOptions={mapOptions} />
       ) : (
-        <MindMapTree key={key} nodes={testData} mapOptions={mapOptions} />
+        <MindMapTree key={key} nodes={data} mapOptions={mapOptions} />
       )}
     </div>
   );
