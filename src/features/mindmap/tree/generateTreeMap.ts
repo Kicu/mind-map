@@ -66,12 +66,33 @@ export function generateTreeMap(
     ])
     .attr("style", "max-width: 100%; height: auto;");
 
+  // dedicated container for everything allows us to use it for transform as we don't want to modify the root svg
+  const chartContainer = svg.append("g");
+
+  // Setup zooming
+  const zoom = d3
+    .zoom<SVGSVGElement, undefined>()
+    .scaleExtent([0.5, 3])
+    .translateExtent([
+      [-2 * width, -2 * height],
+      [3 * width, 3 * height],
+    ])
+    .on("zoom", zoomed);
+
+  function zoomed(event: d3.D3ZoomEvent<SVGSVGElement, undefined>) {
+    const { transform } = event;
+    chartContainer.attr("transform", transform.toString());
+  }
+
+  // TODO setup dedicated listener <rect>
+  svg.call(zoom);
+
   // Add Links
   const links = generateTreeMapLinks(treeRoot.links(), { color: nodeColor });
-  svg.append(() => links);
+  chartContainer.append(() => links);
 
   // Add nodes
-  const node = svg
+  const node = chartContainer
     .append("g")
     .attr("stroke-linejoin", "round")
     .attr("stroke-width", 2)

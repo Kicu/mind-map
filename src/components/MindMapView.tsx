@@ -20,7 +20,7 @@ const availableColors = {
 type MapColor = keyof typeof availableColors;
 
 export function MindMapView() {
-  // having a separate height doesn't currently improve the app as its easier to draw maps in a square container
+  // having a separate height doesn't currently improve the app - its easier to draw maps in a square container
   const [width, setWidth] = useState(baseWidth);
   const [nodeWidth, setNodeWidth] = useState(baseNodeWidth);
   const [nodeHeight, setNodeHeight] = useState(baseNodeHeight);

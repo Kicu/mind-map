@@ -25,34 +25,20 @@ export function generateRadialMap(
   // Add 1 to account for the root node
   const hierarchyHeight = root.height + 1;
 
-  /*** Compute the layout ***/
-
-  // const radius = width / 2;
-  const radius = hierarchyHeight * nodeWidth;
+  const treeRadius = hierarchyHeight * nodeWidth;
 
   const tree = d3
     .tree<MapNode>()
-    .size([2 * Math.PI, radius])
+    .size([2 * Math.PI, treeRadius])
     .separation(getNodeSeparation);
 
   // This line unfortunately mutates root, which means "root" now is also an `HierarchyPointNode<>` type, but TS does not know that
   const treeRoot = tree(root);
 
-  // Count dimensions and center the graph
-
-  let yMax = -Infinity;
-  treeRoot.each((node: D3MapNode) => {
-    if (node.y > yMax) {
-      yMax = node.y;
-    }
-  });
-
-  const treeHeight = yMax; // y0 is always 0 because its the center of circle
-
   // This tree is always drawn in a radial way, so the definition of "width/height" is different
   const treeMeta = {
-    treeWidth: 2 * treeHeight,
-    treeHeight: 2 * treeHeight,
+    treeWidth: 2 * treeRadius,
+    treeHeight: 2 * treeRadius,
     depth: hierarchyHeight,
   };
 
@@ -62,17 +48,39 @@ export function generateRadialMap(
     .create("svg")
     .attr("width", width)
     .attr("height", height)
+    .attr("overflow", "hidden")
     .attr("viewBox", [
-      -radius - nodeWidth / 2,
-      -radius + 100,
-      2 * radius,
-      2 * radius,
+      -treeRadius - nodeWidth/2,
+      -treeRadius + 100,
+      2 * treeRadius + nodeWidth/2,
+      2 * treeRadius + nodeWidth/2,
     ])
-    .attr("style", "max-width: 100%; height: auto;");
+    .style("max-width", "100%");
+
+  // dedicated container for everything allows us to use it for transform, as we don't want to modify the root svg
+  const chartContainer = svg.append("g");
+
+  // Setup zooming
+  const zoom = d3
+    .zoom<SVGSVGElement, undefined>()
+    .scaleExtent([0.5, 3])
+    .translateExtent([
+      [-3 * treeRadius, -3 * treeRadius],
+      [width + 2 * treeRadius, height + 2 * treeRadius],
+    ])
+    .on("zoom", zoomed);
+
+  function zoomed(event: d3.D3ZoomEvent<SVGSVGElement, undefined>) {
+    const { transform } = event;
+    chartContainer.attr("transform", transform.toString());
+  }
+
+  svg.call(zoom);
+  // .call(zoom.transform, d3.zoomIdentity);
 
   // Generate links
   const links = generateRadialMapLinks(treeRoot.links(), { color: nodeColor });
-  svg.append(() => links);
+  chartContainer.append(() => links);
 
   // Generate nodes
   function getNodeSize(node: D3MapNode) {
@@ -94,7 +102,7 @@ export function generateRadialMap(
    * because of that we combine the rotation + reverse rotation with translating in proper order
    * (Big thanks to Łukasz B. for showing me how combining rotations can work)
    */
-  const node = svg
+  const node = chartContainer
     .append("g")
     .attr("stroke-linejoin", "round")
     .selectAll()
@@ -117,7 +125,7 @@ export function generateRadialMap(
     .attr("width", getNodeSize)
     .attr("height", getNodeSize)
     .style("overflow", "visible")
-    .attr("data-size", (d) => `x:${d.x}:y:${d.y}`)
+    .attr("data-size", (d) => `x=${d.x.toFixed(3)}:y=${d.y}`)
     .html((node) => renderNode(node.data));
 
   // top level svg node is guaranteed b/c we actually create it

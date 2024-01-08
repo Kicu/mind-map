@@ -17,8 +17,8 @@ interface Props {
 export function MindMapTree({ nodes, mapOptions }: Props) {
   const { width, height, nodeColor } = mapOptions;
 
-  const [mapMeta, setMapMeta] = useState<MapMeta>();
   const [mapSVGElement, setMapElement] = useState<SVGSVGElement>();
+  const [mapMeta, setMapMeta] = useState<MapMeta>();
   const [isMapSVGAttached, setIsMapSVGAttached] = useState(false);
 
   const [state, dispatch] = useReducer(nodesReducer, {});
@@ -29,7 +29,6 @@ export function MindMapTree({ nodes, mapOptions }: Props) {
     return renderNodeElement(node);
   };
 
-  // for now since all the tree args are local we just run effect once
   useEffect(() => {
     const { mapSVG, meta } = generateTreeMap(nodes, mapOptions, renderNode);
 
