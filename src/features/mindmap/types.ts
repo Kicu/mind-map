@@ -1,4 +1,5 @@
 import type { Opaque } from "type-fest";
+import { MapOptions } from "../../components/types";
 
 export type NodeId = Opaque<string, "nodeId">;
 export const toNodeId = (id: string) => {
@@ -26,3 +27,9 @@ export interface MindMap {
   mapSVG: SVGSVGElement;
   meta: MapMeta;
 }
+
+export type MapGenerator = (
+  data: MapNode,
+  options: MapOptions,
+  renderNode: (node: MapNode) => string
+) => MindMap;

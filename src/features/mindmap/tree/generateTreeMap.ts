@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { MapNode, D3MapNode, MindMap } from "../types";
+import { MapNode, D3MapNode, MapGenerator } from "../types";
 import { generateTreeMapLinks } from "./generateTreeMapLinks";
 import { MapOptions } from "../../../components/types";
 
@@ -7,11 +7,11 @@ function getNodeSeparation(a: D3MapNode, b: D3MapNode) {
   return a.parent == b.parent ? 1.5 : 2;
 }
 
-export function generateTreeMap(
+export const generateTreeMap: MapGenerator = (
   data: MapNode,
   options: MapOptions,
   renderNode: (node: MapNode) => string
-): MindMap {
+) => {
   const { width, height, nodeWidth, nodeColor } = options;
   // This means that when the tree nodes are positioned there will be more vertical space between nodes
   const nodeHeight = nodeWidth * 1.5;
@@ -121,4 +121,4 @@ export function generateTreeMap(
     mapSVG: mapNode,
     meta: treeMeta,
   };
-}
+};

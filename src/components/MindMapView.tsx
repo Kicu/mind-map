@@ -1,10 +1,11 @@
 import { useCallback, useState } from "react";
 // import data from "../state/static/data-ttrpgs";
 import data from "../state/static/data-life";
-import { MindMapRadial } from "./MindMapRadial";
+import { generateRadialMap } from "../features/mindmap/radial/generateRadialMap";
+import { generateTreeMap } from "../features/mindmap/tree/generateTreeMap";
 import { MapOptions, MapType } from "./types";
 import { MindMapOptionsControls } from "./controls/MindMapOptionsControls";
-import { MindMapTree } from "./MindMapTree";
+import { MindMap } from "./MindMap";
 
 const baseWidth = 1000;
 const baseNodeWidth = 150;
@@ -45,6 +46,9 @@ export function MindMapView() {
     nodeColor: availableColors[mapColor],
   };
 
+  const generateMindMap =
+    mapType === "RADIAL" ? generateRadialMap : generateTreeMap;
+
   return (
     <div className="map-container">
       <MindMapOptionsControls
@@ -58,11 +62,12 @@ export function MindMapView() {
         setColor={setColor}
         onUpdateClick={forceFreshRender}
       />
-      {mapType === "RADIAL" ? (
-        <MindMapRadial key={key} nodes={data} mapOptions={mapOptions} />
-      ) : (
-        <MindMapTree key={key} nodes={data} mapOptions={mapOptions} />
-      )}
+      <MindMap
+        key={key}
+        nodes={data}
+        mapOptions={mapOptions}
+        generateMindMap={generateMindMap}
+      />
     </div>
   );
 }

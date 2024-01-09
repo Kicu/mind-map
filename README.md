@@ -92,4 +92,4 @@ Styling is done via plain old CSS using BEM. I have also used bulmacss to get so
 - [Base example of d3 tidy tree from Observable](https://observablehq.com/@d3/tree-component)
 - [Base example of d3 radial tree from Observable](https://observablehq.com/@d3/radial-tree-component)
 - [A Brief Guide to TypeScript and D3js Hierarchy and Trees](https://javascript.plainenglish.io/a-brief-guide-to-typescript-and-d3js-hierarchy-and-trees-f9bb45871d88) - this was extremely helpful in handling generics from d3 which were quite tricky
-- [D3 Zoom - The Missing Manual](https://www.datamake.io/blog/d3-zoom) - an amazing source helping to make sense of zooming in d3
+- [D3 Zoom - The Missing Manual](https://www.datamake.io/blog/d3-zoom) - an amazing resource helping to make sense of zooming in d3

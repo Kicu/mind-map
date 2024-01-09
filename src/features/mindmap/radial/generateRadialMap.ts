@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { MapNode, D3MapNode, MindMap } from "../types";
+import { MapNode, D3MapNode, MapGenerator } from "../types";
 import { generateRadialMapLinks } from "./generateRadialMapLinks";
 import { isRootNode } from "../mapUtils";
 import { MapOptions } from "../../../components/types";
@@ -12,11 +12,11 @@ function getNodeSeparation(a: D3MapNode, b: D3MapNode) {
   return (a.parent == b.parent ? 1 : 2) / a.depth;
 }
 
-export function generateRadialMap(
+export const generateRadialMap: MapGenerator = (
   data: MapNode,
   options: MapOptions,
   renderNode: (node: MapNode) => string
-): MindMap {
+) => {
   const { width, height, nodeWidth, nodeColor } = options;
 
   const root = d3.hierarchy(data);
@@ -50,10 +50,10 @@ export function generateRadialMap(
     .attr("height", height)
     .attr("overflow", "hidden")
     .attr("viewBox", [
-      -treeRadius - nodeWidth/2,
+      -treeRadius - nodeWidth / 2,
       -treeRadius + 100,
-      2 * treeRadius + nodeWidth/2,
-      2 * treeRadius + nodeWidth/2,
+      2 * treeRadius + nodeWidth / 2,
+      2 * treeRadius + nodeWidth / 2,
     ])
     .style("max-width", "100%");
 
@@ -136,4 +136,4 @@ export function generateRadialMap(
     mapSVG: mapNode,
     meta: treeMeta,
   };
-}
+};
