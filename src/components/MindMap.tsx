@@ -1,20 +1,20 @@
 import { useEffect, useReducer, useState } from "react";
-import { generateTreeMap } from "../features/mindmap/tree/generateTreeMap";
-import { MapMeta, MapNode } from "../features/mindmap/types";
+import { MapGenerator, MapMeta, MapNode } from "../features/mindmap/types";
 import { MindMapInfo } from "../features/mindmap/components/MindMapInfo";
 import { AttachForeignSVG } from "./AttachForeignSVG";
 import { renderNode as renderNodeElement } from "./nodes/renderNode";
-import { nodesReducer, registerNode } from "../state/mapNodesState";
 import { MindMapNodeList } from "./nodes/MindMapNodeList";
+import { nodesReducer, registerNode } from "../state/mapNodesState";
 import { MapOptions } from "./types";
 import "./Map.css";
 
 interface Props {
   nodes: MapNode;
   mapOptions: MapOptions;
+  generateMindMap: MapGenerator;
 }
 
-export function MindMapTree({ nodes, mapOptions }: Props) {
+export function MindMap({ nodes, mapOptions, generateMindMap }: Props) {
   const { width, height, nodeColor } = mapOptions;
 
   const [mapSVGElement, setMapElement] = useState<SVGSVGElement>();
@@ -30,11 +30,11 @@ export function MindMapTree({ nodes, mapOptions }: Props) {
   };
 
   useEffect(() => {
-    const { mapSVG, meta } = generateTreeMap(nodes, mapOptions, renderNode);
+    const { mapSVG, meta } = generateMindMap(nodes, mapOptions, renderNode);
 
-    setMapMeta(meta);
     setMapElement(mapSVG);
-  }, [nodes, mapOptions]);
+    setMapMeta(meta);
+  }, [nodes, mapOptions, generateMindMap]);
 
   return (
     <div className="map" style={{ width, height }}>
@@ -47,7 +47,12 @@ export function MindMapTree({ nodes, mapOptions }: Props) {
           }}
         />
       )}
-      {isMapSVGAttached && <MindMapNodeList mapNodes={Object.values(state)} nodeColor={nodeColor} />}
+      {isMapSVGAttached && (
+        <MindMapNodeList
+          mapNodes={Object.values(state)}
+          nodeColor={nodeColor}
+        />
+      )}
     </div>
   );
 }
